@@ -9,44 +9,19 @@
       justify-content="center"
     >
       <CHeading textAlign="center" mb="4"> Serverless Contact form </CHeading>
-      <CFlex justify="center" width="full" direction="column" align="center" >
-        <CBox mb="3">
-          <CIconButton
-            mr="3"
-            :icon="colorMode === 'light' ? 'moon' : 'sun'"
-            @click="toggleColorMode"
-            :aria-label="`Switch to ${colorMode === 'light' ? 'dark' : 'light'} mode`"
-          />
-        </CBox>
+       <CFlex justify="center" width="full" direction="column" align="center" >
+         <CBox mb="3">
+            <CIconButton
+              mr="3"
+              :icon="colorMode === 'light' ? 'moon' : 'sun'"
+              @click="toggleColorMode"
+              :aria-label="`Switch to ${colorMode === 'light' ? 'dark' : 'light'} mode`"
+            />
+          </CBox>
 
-        <CBox textAlign="left" width="50%">
-          <form>
-            <CFormControl>
-              <CFormLabel for="name"> Name </CFormLabel>
-              <CInput type="text" id="name" aria-describedby="name" />
-            </CFormControl>
+         <ContactForm />
 
-            <CFormControl>
-              <CFormLabel for="email"> Email </CFormLabel>
-              <CInput type="email" id="email" aria-describedby="email-helper-text" />
-              <CFormHelperText id="email-helper-text">
-                We'll never share your email.
-              </CFormHelperText>
-            </CFormControl>
-
-            <CFormControl>
-              <CFormLabel for="message"> Message </CFormLabel>
-              <CTextarea placeholder="Type your message" />
-            </CFormControl>
-            <CBox  mt="12" d="flex" flex-dir="column" align="center" >
-              <CButton  right-icon="arrow-forward" width="20%"  variant-color="vue" variant="outline">
-              Submit
-              </CButton>
-            </CBox>
-          </form>
-        </CBox>
-
-      </CFlex>
+       </CFlex>
     </CBox>
   </div>
 </template>
@@ -65,6 +40,8 @@ import {
   CHeading,
   CLink
 } from '@chakra-ui/vue'
+import ContactForm from '~/components/contactForm'
+import TestContact from '~/components/testContact'
 
 export default {
   name: 'App',
@@ -81,6 +58,8 @@ export default {
     CFlex,
     CHeading,
     CLink,
+    ContactForm,
+    TestContact
   },
   data () {
     return {
