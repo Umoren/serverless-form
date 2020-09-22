@@ -23,7 +23,7 @@ exports.handler = async (event) => {
 
   return mailgun.messages().send(mailgunData).then(() => ({
     statusCode: 200,
-    body: "Your message was sent successfully! We'll be in touch."
+    body: "Your message was sent successfully!"
   })).catch(error => ({
     statusCode: 422,
     body: `Error: ${error}`

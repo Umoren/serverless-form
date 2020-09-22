@@ -20,7 +20,7 @@
             <CTextarea v-model="form.contactMessage" placeholder="Type your message" />
           </CFormControl>
           <CBox  mt="12" d="flex" flex-dir="column" align="center" >
-            <CButton @click="submitForm('contactForm')"  right-icon="arrow-forward" width="20%"  variant-color="vue" variant="outline">
+            <CButton @click="submitForm()"  right-icon="arrow-forward" width="20%"  variant-color="vue" variant="outline">
             Submit
             </CButton>
           </CBox>
@@ -59,47 +59,19 @@ export default {
         contactEmail: '',
         contactMessage: ''
       },
-      results: [],
-      response: '_',
-      error: null,
-       rules: {
-        name: [
-          {
-            required: true,
-            message: 'Please tell me your name',
-            trigger: 'blur',
-          },
-        ],
-        email: [
-          {
-            required: true,
-            message: 'Please enter a valid email address',
-            trigger: 'blur',
-          },
-          {
-            type: 'email',
-            message: 'Please enter a valid email address',
-            trigger: 'blur',
-          },
-        ],
-      },
+
     }
   },
   methods: {
-   submitForm(formName) {
-     this.messages = []
+   submitForm() {
      this.sendContactToLambdaFunction()
    },
 
    resetForm(){
-     this.results = []
-     this.form.contactMessage= ''
      this.form.contactEmail = ''
      this.form.contactName = ''
+     this.form.contactMessage= ''
    },
-  clearMessage () {
-    this.resetForm()
-  },
    async sendContactToLambdaFunction() {
      try {
        const response = await this.$axios.$post('/.netlify/functions/contact-mail', {
@@ -107,16 +79,24 @@ export default {
          issuerEmail: this.form.contactEmail,
          message: this.form.contactMessage
        })
+        this.$toast({
+        title: 'Mail sent',
+        description: response,
+        status: 'success',
+        duration: 10000,
+        isClosable: true
+      })
        this.resetForm()
        console.log('response message', response)
-       this.result.push({
-         type: 'success', text: response
-       })
+
      } catch (err) {
-       this.results.push({
-         type: 'error',
-         text: err.response
-       })
+        this.$toast({
+        title: 'An error occured',
+        description: err,
+        status: 'error',
+        duration: 10000,
+        isClosable: true
+      })
      }
 
    }
